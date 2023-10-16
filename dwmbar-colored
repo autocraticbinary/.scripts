@@ -139,16 +139,21 @@ nettrf(){
 
 # Updates
 pkg_updates() {
-#	#updates=$(xbps-install -un | wc -l) # void
-#  updates=$(eix --installed --upgrade | tail -1 | awk '{ print $2 }')
-	 updates=$(pacman -Qu | grep -Fcv "[ignored]" | sed "s/^//;s/^0$//g")   # arch , needs pacman contrib
-#	# updates=$(aptitude search '~U' | wc -l)  # apt (ubuntu,debian etc)
-#
+	# updates=$(xbps-install -un | wc -l) # void
+  	# updates=$(eix --installed --upgrade | tail -1 | awk '{ print $2 }')
+	# updates=$(pacman -Qu | grep -Fcv "[ignored]" | sed "s/^//;s/^0$//g")   # arch , needs pacman contrib
+	# updates=$(aptitude search '~U' | wc -l)  # apt (ubuntu,debian etc)
+
 	if [ "$updates" == "0" ]; then
 		printf "^c$green^^b$green^^c$black^  ^c$green^^b$black^Fully Updated^d^"
 	else
 		printf "^c$green^^b$green^^c$black^  $updates " "^c$green^^b$black^updates ^d^"
 	fi
+}
+
+updates() {
+	updates=$(checkupdates 2> /dev/null | wc -l )
+	printf "^c$green^^b$green^^c$black^  $updates " "^c$green^^b$black^"
 }
 
 blank() {
@@ -164,6 +169,6 @@ while true; do
   #xsetroot -name "$updates$(nettrf)$(tmp)$(cpu)$(mem)$(vol)$(lit)$(bat)$(key)$(dat)$(net)"
   # xsetroot -name "$(cpu)$(mem)$(vol)$(lit)$(bat)$(key)$(dat)$(net)"
   # xsetroot -name "$updates$(cpu)$(mem)$(lit)$(bat)$(dat)$(net)"
-  xsetroot -name "$(blank)$(pkg_updates)$(cpu)$(tmp)$(mem)$(lit)$(vol)$(bat)$(net)$(dat)"
+  xsetroot -name "$(blank)$(updates)$(cpu)$(tmp)$(mem)$(lit)$(vol)$(bat)$(net)$(dat)"
   sleep 0.2
 done &
