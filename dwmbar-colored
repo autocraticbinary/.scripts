@@ -7,7 +7,7 @@
 #source ~/.local/bin/statusbar/themes/tomorrow-dark
 #source ~/.local/bin/statusbar/themes/tomorrow
 source ~/.scripts/themes/gruvbox
-#source ~/.local/bin/statusbar/themes/doom
+#source ~/.scripts/themes/doom
 
 
 interval=0
@@ -153,7 +153,12 @@ pkg_updates() {
 
 updates() {
 	updates=$(checkupdates 2> /dev/null | wc -l )
-	printf "^c$green^^b$green^^c$black^  $updates " "^c$green^^b$black^"
+	printf "^c$green^^b$green^^c$black^  $updates " "^c$green^"
+}
+
+utime() {
+	upt=$(uptime | awk '{print $3,$4}' | sed 's/,//')
+	printf "^c$magenta^^b$magenta^^c$black^ 󰔟 $upt " "^c$magenta^"
 }
 
 blank() {
@@ -169,6 +174,6 @@ while true; do
   #xsetroot -name "$updates$(nettrf)$(tmp)$(cpu)$(mem)$(vol)$(lit)$(bat)$(key)$(dat)$(net)"
   # xsetroot -name "$(cpu)$(mem)$(vol)$(lit)$(bat)$(key)$(dat)$(net)"
   # xsetroot -name "$updates$(cpu)$(mem)$(lit)$(bat)$(dat)$(net)"
-  xsetroot -name "$(blank)$(updates)$(cpu)$(tmp)$(mem)$(lit)$(vol)$(bat)$(net)$(dat)"
+  xsetroot -name "$(blank)$(updates)$(cpu)$(tmp)$(utime)$(lit)$(vol)$(bat)$(net)$(dat)"
   sleep 0.2
 done &
