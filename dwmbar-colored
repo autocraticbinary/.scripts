@@ -101,6 +101,35 @@ vol(){
 	echo "^c$magenta^^b$magenta^^c$black^^b$magenta^ $icon $vol% "
 }
 
+volm(){
+  vol="$(wpctl get-volume @DEFAULT_AUDIO_SINK@)"
+
+  # If muted, print 🔇 and exit.
+  [ "$vol" != "${vol%\[MUTED\]}" ] && echo 🔇 && exit
+
+  vol="${vol#Volume: }"
+
+  split() {
+	  # For ommiting the . without calling and external program.
+	  IFS=$2
+	  set -- $1
+	  printf '%s' "$@"
+  }
+
+  vol="$(printf "%.0f" "$(split "$vol" ".")")"
+
+  if [ "$vol" -gt "70" ]; then
+		icon=" "
+	elif [ "$vol" -gt "30" ]; then
+		icon=" "
+	elif [ "$vol" -gt "0" ]; then
+		icon=" " 
+	else
+		echo "" && exit
+	fi
+
+  echo "^c$magenta^^b$magenta^^c$black^^b$magenta^ $icon $vol% "
+}
 
 net() {
 	connected=$(cat /sys/class/net/e*/operstate 2>/dev/null)
@@ -174,6 +203,6 @@ while true; do
   #xsetroot -name "$updates$(nettrf)$(tmp)$(cpu)$(mem)$(vol)$(lit)$(bat)$(key)$(dat)$(net)"
   # xsetroot -name "$(cpu)$(mem)$(vol)$(lit)$(bat)$(key)$(dat)$(net)"
   # xsetroot -name "$updates$(cpu)$(mem)$(lit)$(bat)$(dat)$(net)"
-  xsetroot -name "$(blank)$(updates)$(cpu)$(tmp)$(utime)$(lit)$(vol)$(bat)$(net)$(dat)"
+  xsetroot -name "$(blank)$(updates)$(cpu)$(tmp)$(utime)$(lit)$(volm)$(bat)$(net)$(dat)"
   sleep 0.2
 done &
