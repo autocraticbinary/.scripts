@@ -13,7 +13,7 @@ timedate () {
 }
 
 clock () {
-	date +"%c"
+	date +"%d-%m-%Y %a %H:%M:%S"
 }
 
 lit () {
@@ -21,11 +21,10 @@ lit () {
 }
 
 vol () {
-	pamixer --get-volume
+	pulsemixer --get-volume | awk '{print $1}'
 }
 
-
 while :; do
-	xsetroot -name "$(battery);$(wifi) << VOL $(vol) << LIT $(lit) << $(clock) "
+	xsetroot -name "[$(battery)]  <<  $(wifi)  <<  LIT $(lit)  <<  VOL $(vol)%  <<  $(clock) "
 	sleep 1s
 done
