@@ -1,0 +1,4 @@
+#!/bin/bash
+
+vol = "$(wpctl get-volume @DEFAULT_AUDIO_SINK@)"
+echo "$vol"
