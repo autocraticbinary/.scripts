@@ -21,10 +21,10 @@ lit () {
 }
 
 vol () {
-	pulsemixer --get-volume | awk '{print $1}'
+	~/.scripts/vol
 }
 
 while :; do
-	xsetroot -name "[$(battery)]  <<  $(wifi)  <<  LIT $(lit)  <<  VOL $(vol)%  <<  $(clock) "
+	xsetroot -name "[$(battery)]  <<  $(wifi)  <<  LIT $(lit)  <<  VOL $(vol)  <<  $(clock) "
 	sleep 1s
 done
