@@ -41,6 +41,6 @@ vol () {
 }
 
 while :; do
-	xsetroot -name "[$(battery)]  <<  $(wifi)  <<  LIT $(lit)  <<  VOL $(vol) << $(temp) << $(disk)  << $(mem) << $(clock) "
+	xsetroot -name "[$(battery)]  <<  $(wifi)  <<  LIT $(lit)  <<  VOL $(vol)  <<  $(temp)  <<  $(disk)  <<  $(mem)  <<  CPU $(cpu)  <<  $(clock) "
 	sleep 1s
 done
